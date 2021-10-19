@@ -1,0 +1,44 @@
+server:
+  port: 8081
+  
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pmic?useSSL=false
+    username: root
+    password: pmic
+    hikari:
+      maximum-pool-size: 5
+      pool-name: pmic-connection-pool
+      connection-timeout: 5000
+      transaction-isolation: TRANSACTION_READ_COMMITTED
+  jackson:
+    default-property-inclusion: NON_NULL
+    serialization:
+      write-dates-as-timestamps: false    
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  rabbitmq:
+    host: localhost
+    port: 5672
+    addresses: localhost:5672
+    username: guest
+    password: guest
+    
+camel:
+  dataformat:
+    json-jackson:
+      object-mapper: jacksonObjectMapper
+  springboot:
+    trace-formatter-show-body: true
+    trace-formatter-show-headers: true
+    tracing: false
+
+fulfillment-center-file-route: file:C:\\shipIt\\fulfillment-center-file-input?delete=true&readLock=none&moveFailed=error
+fulfillment-center-file-processed: file:C:\\shipIt\\fulfillment-center-file-proccesed
